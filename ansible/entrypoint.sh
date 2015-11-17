@@ -15,4 +15,3 @@ cat /root/.ssh/id_rsa.pub >>/hostssh/authorized_keys
 ansible-playbook -i "localhost," "$@"
 
 mv /hostssh/authorized_keys.bak /hostssh/authorized_keys
-
