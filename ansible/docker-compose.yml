@@ -1,0 +1,5 @@
+provision:
+  image: kovalyshyn/ansibleprovision
+  net: host
+  volumes:
+    - /root/.ssh:/hostssh

@@ -1,0 +1,6 @@
+---
+- name: Trick out Debian server
+  hosts: all
+  gather_facts: False
+  roles:
+    - { role: 'my-shell' }
