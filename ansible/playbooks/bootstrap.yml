@@ -19,7 +19,6 @@
         - ntp
         - mtr
         - curl
-        - sudo
         - tree
         - tmux
         - mosh

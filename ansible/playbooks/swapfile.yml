@@ -2,7 +2,7 @@
 - name: Set up swap file for droplet
   hosts: all
   vars:
-    - swap_file_path: /root/swapfile
+    - swap_file_path: /var/swapfile.img
     - swap_file_size: 1GB
   gather_facts: False
 

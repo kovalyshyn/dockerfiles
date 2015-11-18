@@ -1,12 +1,13 @@
-from debian:jessie
+FROM debian:jessie
+MAINTAINER "Vitaly Kovalyshyn" <vitaly@kovalyshyn.pp.ua>
 
-add ./playbooks /playbooks
-add ./entrypoint.sh /entrypoint.sh
-run apt-get update && \
+ADD ./playbooks /playbooks
+ADD ./entrypoint.sh /entrypoint.sh
+RUN apt-get update && \
     apt-get install -y ansible ssh && \
     chmod +x /entrypoint.sh && \
     rm -rf /var/lib/apt/lists/*
-add ./conf/ansible.cfg /etc/ansible/ansible.cfg
+ADD ./conf/ansible.cfg /etc/ansible/ansible.cfg
 
-entrypoint ["./entrypoint.sh"]
-cmd ["/playbooks/bootstrap.yml"]
+ENTRYPOINT ["./entrypoint.sh"]
+CMD ["/playbooks/bootstrap.yml"]
