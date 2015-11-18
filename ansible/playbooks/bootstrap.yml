@@ -2,5 +2,70 @@
 - name: Trick out Debian server
   hosts: all
   gather_facts: False
-  roles:
-    - { role: 'my-shell' }
+  tasks:
+    - name: 'Updates apt cache & upgrades dist'
+      apt: 
+        upgrade: 'yes'
+        update_cache: 'yes'
+
+    - name: 'Install all necessary software'
+      apt: 
+        name: '{{ item }}'
+      with_items:
+        - jq
+        - zsh 
+        - git
+        - vim
+        - ntp
+        - mtr
+        - curl
+        - sudo
+        - tree
+        - tmux
+        - mosh
+        - lsof
+        - htop
+        - iotop
+        - iftop
+        - iperf
+        - ngrep
+        - tcpdump
+        - dnsutils
+
+    - name: "Start ntp"
+      service: name=ntp state=started enabled=yes
+
+    - name: checkouts 'oh-my-zsh' from git
+      git: 
+        repo: https://github.com/robbyrussell/oh-my-zsh
+        dest: '/root/.oh-my-zsh'
+        accept_hostkey: yes
+
+    - name: "Get .vimrc"
+      get_url: 
+        url: https://raw.githubusercontent.com/kovalyshyn/ansible-my-shell/master/roles/my-shell/files/.vimrc 
+        dest: /root/.vimrc
+
+    - name: "Get .zshrc"
+      get_url: 
+        url: https://raw.githubusercontent.com/kovalyshyn/ansible-my-shell/master/roles/my-shell/files/.zshrc 
+        dest: /root/.zshrc
+
+    - name: "Get .tmux.conf"
+      get_url: 
+        url: https://raw.githubusercontent.com/kovalyshyn/ansible-my-shell/master/roles/my-shell/files/.tmux.conf 
+        dest: /root/.tmux.conf
+
+    - name: "Set zsh for root"
+      user: 
+        name: 'root'
+        shell: '/bin/zsh'
+
+    - name: "Set memory limit in GRUB"
+      lineinfile: 
+        dest: '/etc/default/grub'
+        regexp: '^GRUB_CMDLINE_LINUX_DEFAULT'
+        line: 'GRUB_CMDLINE_LINUX_DEFAULT="cgroup_enable=memory swapaccount=1"'
+
+    - name: "Load new GRUB config"
+      command: update-grub
