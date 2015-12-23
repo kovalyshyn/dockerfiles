@@ -18,6 +18,7 @@
         - vim
         - ntp
         - mtr
+        - nmap
         - curl
         - tree
         - tmux
