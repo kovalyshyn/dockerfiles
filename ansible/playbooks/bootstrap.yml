@@ -31,6 +31,7 @@
         - ngrep
         - tcpdump
         - dnsutils
+        - python-setuptools
 
     - name: "Start ntp"
       service: name=ntp state=started enabled=yes
